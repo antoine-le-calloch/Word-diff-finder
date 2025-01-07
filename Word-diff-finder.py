@@ -30,11 +30,17 @@ def get_multiline_input(prompt):
 
 if __name__ == "__main__":
     print("Welcome to Word-diff-finder!")
+    keep_going = True
 
-    print("\n Please enter the first text than add an empty line:")
-    text1 = get_multiline_input("> ")
+    while keep_going:
+        print("\n Please enter the first text than add an empty line:")
+        text1 = get_multiline_input("> ")
 
-    print("\n Please enter the second text than add an empty line:")
-    text2 = get_multiline_input("> ")
+        print("\n Please enter the second text than add an empty line:")
+        text2 = get_multiline_input("> ")
 
-    compare_texts(text1, text2)
+        compare_texts(text1, text2)
+
+        print("\nDo you want to compare another texts? (yes/no)")
+        if input().strip().lower() != "yes":
+            keep_going = False
