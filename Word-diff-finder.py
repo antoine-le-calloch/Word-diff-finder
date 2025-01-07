@@ -1,22 +1,30 @@
-def compare_texts(content1, content2):
-    # Convert the content into sets of unique words
-    words1 = set(content1.split())
-    words2 = set(content2.split())
+from collections import Counter
+
+def display_result(words, only_in_text, file_place):
+    print(f"Words only in the {file_place} text:")
+    print("Total differences:", len(only_in_text))
+    for word in sorted(only_in_text):
+        print(f"  {word}")
+    print("Words that are duplicated in the text:")
+    for key, value in Counter(words).items():
+        if value > 1: print(f" {value}: {key}")
+
+    print("\nResults as a list:")
+    print(" ".join(only_in_text))
+
+
+def compare_texts(text1, text2):
+    words1 = text1.split()
+    words2 = text2.split()
 
     # Find differences
-    only_in_file1 = words1 - words2
-    only_in_file2 = words2 - words1
+    only_in_text1 = set(words1) - set(words2)
+    only_in_text2 = set(words2) - set(words1)
 
-    # Print the results
-    print("Words only in the first text:")
-    for word in sorted(only_in_file1):
-        print(f"  {word}")
-    print("\nTotal differences:", len(only_in_file1))
-    print("\n//////////////////////////////////////////////")
-    print("\nWords only in the second text:")
-    for word in sorted(only_in_file2):
-        print(f"  {word}")
-    print("\nTotal differences:", len(only_in_file2))
+    display_result(words1, only_in_text1, "first")
+    print("\n//////////////////////////////\n")
+    display_result(words2, only_in_text2, "second")
+
 
 def get_multiline_input(prompt):
     print(prompt)
@@ -26,7 +34,8 @@ def get_multiline_input(prompt):
         if line.strip() == "":
             break
         lines.append(line)
-    return "\n".join(lines)
+    return " ".join(lines)
+
 
 if __name__ == "__main__":
     print("Welcome to Word-diff-finder!")
@@ -34,12 +43,12 @@ if __name__ == "__main__":
 
     while keep_going:
         print("\n Please enter the first text than add an empty line:")
-        text1 = get_multiline_input("> ")
+        multiline_input_1 = get_multiline_input("> ")
 
         print("\n Please enter the second text than add an empty line:")
-        text2 = get_multiline_input("> ")
+        multiline_input_2 = get_multiline_input("> ")
 
-        compare_texts(text1, text2)
+        compare_texts(multiline_input_1, multiline_input_2)
 
         print("\nDo you want to compare another texts? (yes/no)")
         if input().strip().lower() != "yes":
